@@ -3,9 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SurveyScreen = ({ navigation }) => {
-  const [habit, setHabit] = useState('');
-  const [mood, setMood] = useState('');
-  const [comment, setComment] = useState('');
+  const [form, setForm] = useState({ habit: '', mood: '', comment: '' });
 
   const saveHabit = async (newHabit) => {
     try {
@@ -19,6 +17,7 @@ const SurveyScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    const { habit, mood, comment } = form;
     if (!habit || !mood || !comment) {
       Alert.alert('Ошибка', 'Пожалуйста, заполните все поля.');
       return;
@@ -26,22 +25,15 @@ const SurveyScreen = ({ navigation }) => {
 
     const newHabit = {
       habit,
-      mood: parseInt(mood), // Преобразуем настроение в число
+      mood: parseInt(mood),
       comment,
-      timestamp: Date.now(), // Добавляем временную метку
+      timestamp: Date.now(),
     };
 
-    // Сохраняем данные в локальное хранилище
     await saveHabit(newHabit);
 
     Alert.alert('Успешно', 'Ваши данные сохранены.');
-
-    // Очистка полей после отправки
-    setHabit('');
-    setMood('');
-    setComment('');
-
-    // Переход к списку привычек после отправки
+    setForm({ habit: '', mood: '', comment: '' });
     navigation.navigate('HabitList');
   };
 
@@ -51,16 +43,16 @@ const SurveyScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Привычка"
-        value={habit}
-        onChangeText={setHabit}
+        value={form.habit}
+        onChangeText={(value) => setForm({ ...form, habit: value })}
       />
 
       <Text style={styles.label}>Оцените ваше настроение (1-10):</Text>
       <TextInput
         style={styles.input}
         placeholder="Настроение"
-        value={mood}
-        onChangeText={setMood}
+        value={form.mood}
+        onChangeText={(value) => setForm({ ...form, mood: value })}
         keyboardType="numeric"
       />
 
@@ -68,8 +60,8 @@ const SurveyScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Комментарии"
-        value={comment}
-        onChangeText={setComment}
+        value={form.comment}
+        onChangeText={(value) => setForm({ ...form, comment: value })}
       />
 
       <Button title="Сохранить" onPress={handleSubmit} />

@@ -1,4 +1,3 @@
-// src/screens/Settings.js
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
@@ -10,7 +9,7 @@ const Settings = ({ navigation }) => {
     barChart: false,
   });
 
-  const handleCheckBoxChange = (chartType) => {
+  const toggleChartSelection = (chartType) => {
     setSelectedCharts((prev) => ({
       ...prev,
       [chartType]: !prev[chartType],
@@ -23,8 +22,7 @@ const Settings = ({ navigation }) => {
       alert('Пожалуйста, выберите хотя бы один график.');
       return;
     }
-    // Здесь вы можете сохранить настройки, например, в AsyncStorage
-    navigation.goBack(); // Возврат на предыдущий экран
+    navigation.goBack();
   };
 
   return (
@@ -34,19 +32,19 @@ const Settings = ({ navigation }) => {
       <View>
         <CheckBox
           value={selectedCharts.lineChart}
-          onValueChange={() => handleCheckBoxChange('lineChart')}
+          onValueChange={() => toggleChartSelection('lineChart')}
         />
         <Text>Линейный график</Text>
 
         <CheckBox
           value={selectedCharts.pieChart}
-          onValueChange={() => handleCheckBoxChange('pieChart')}
+          onValueChange={() => toggleChartSelection('pieChart')}
         />
         <Text>Круговая диаграмма</Text>
 
         <CheckBox
           value={selectedCharts.barChart}
-          onValueChange={() => handleCheckBoxChange('barChart')}
+          onValueChange={() => toggleChartSelection('barChart')}
         />
         <Text>Столбчатая диаграмма</Text>
       </View>
