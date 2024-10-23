@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+//const AsyncStorage = require('@react-native-async-storage/async-storage');
+import { Picker } from '@react-native-picker/picker';
 
 const SurveyScreen = ({ navigation }) => {
   const [form, setForm] = useState({
@@ -12,6 +13,30 @@ const SurveyScreen = ({ navigation }) => {
     duration: '1 час',
     context: 'я один',
   });
+
+  // Функция для форматирования timestamp
+  const formatTimestamp = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const seconds = ('0' + date.getSeconds()).slice(-2);
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
+  // Функция для преобразования duration в формат HH:MM:SS
+  const formatDuration = (durationText) => {
+    const durationMap = {
+      '15 минут': '00:15:00',
+      '30 минут': '00:30:00',
+      '1 час': '01:00:00',
+      '2 часа': '02:00:00',
+      '4 часа': '04:00:00',
+    };
+    return durationMap[durationText];
+  };
 
   // Сохранение привычек в локальное хранилище
   const saveHabit = async (newHabit) => {
@@ -37,10 +62,10 @@ const SurveyScreen = ({ navigation }) => {
       habit,
       moodBefore: parseInt(moodBefore),
       moodAfter: parseInt(moodAfter),
-      duration,
+      duration: formatDuration(duration), // Сохранение в формате HH:MM:SS
       context,
       comment,
-      timestamp: Date.now(),
+      timestamp: formatTimestamp(), // Сохранение в формате 'YYYY-MM-DD HH:MM:SS'
     };
 
     await saveHabit(newHabit);
@@ -54,7 +79,7 @@ const SurveyScreen = ({ navigation }) => {
       duration: '1 час',
       context: 'я один',
     });
-    navigation.navigate('HabitList');
+    navigation.navigate('HabitListScreen');
   };
 
   return (

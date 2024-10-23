@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, View, Text } from 'react-native';
 
-const HabitList = ({ habits }) => {
+const HabitListItem = ({ habits }) => {
   const renderHabit = ({ item }) => (
     <View style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}>
       <Text>Activity: {item.activity}</Text>
@@ -20,4 +20,4 @@ const HabitList = ({ habits }) => {
   );
 };
 
-export default HabitList;
+export default HabitListItem;

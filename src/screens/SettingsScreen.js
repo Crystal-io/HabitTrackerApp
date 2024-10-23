@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
-const Settings = ({ navigation }) => {
+const SettingsScreen = ({ navigation }) => {
   const [selectedCharts, setSelectedCharts] = useState({
     lineChart: false,
     pieChart: false,
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+export default SettingsScreen;

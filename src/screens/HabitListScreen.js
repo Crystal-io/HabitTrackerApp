@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, FlatList, Text, Button, StyleSheet } from 'react-native';
 import { getHabits } from '../storage/HabitStorage';
 
-const HabitList = ({ navigation }) => {
+const HabitListScreen = ({ navigation }) => {
   const [habits, setHabits] = useState([]);
 
   const fetchHabits = async () => {
@@ -34,8 +34,8 @@ const HabitList = ({ navigation }) => {
         renderItem={renderHabitItem}
         keyExtractor={(item) => item.id?.toString() || item.timestamp?.toString() || Math.random().toString()}
       />
-      <Button title="Перейти к аналитике" onPress={() => navigation.navigate('Analytics')} />
-      <Button title="Настройки" onPress={() => navigation.navigate('Settings')} />
+      <Button title="Перейти к аналитике" onPress={() => navigation.navigate('AnalyticsScreen')} />
+      <Button title="Настройки" onPress={() => navigation.navigate('SettingsScreen')} />
     </SafeAreaView>
   );
 };
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HabitList;
+export default HabitListScreen;
