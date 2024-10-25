@@ -19,3 +19,13 @@ export const saveHabit = async (newHabit) => {
     console.error('Ошибка при сохранении привычки:', error);
   }
 };
+
+// Функция для очистки всех привычек
+export const clearHabits = async () => {
+  try {
+    await AsyncStorage.removeItem('habits');
+    console.log('Все привычки удалены');
+  } catch (error) {
+    console.error('Ошибка при очистке данных привычек:', error);
+  }
+};

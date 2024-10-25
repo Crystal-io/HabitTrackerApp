@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HabitListScreen">
+      <Stack.Navigator initialRouteName="SurveyScreen">
         <Stack.Screen
           name="SurveyScreen"
           component={SurveyScreen}
