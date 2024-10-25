@@ -13,7 +13,6 @@ const SurveyScreen = ({ navigation }) => {
     context: 'я один',
   });
 
-  // Функция для форматирования timestamp
   const formatTimestamp = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -25,7 +24,6 @@ const SurveyScreen = ({ navigation }) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  // Функция для преобразования duration в формат HH:MM:SS
   const formatDuration = (durationText) => {
     const durationMap = {
       '15 минут': '00:15:00',
@@ -37,7 +35,7 @@ const SurveyScreen = ({ navigation }) => {
     return durationMap[durationText];
   };
 
-  // Сохранение привычек в локальное хранилище
+    // Сохранение привычек в локальное хранилище
   const saveHabit = async (newHabit) => {
     try {
       const storedHabits = await AsyncStorage.getItem('habits');
@@ -49,7 +47,7 @@ const SurveyScreen = ({ navigation }) => {
     }
   };
 
-  // Обработка отправки формы
+    // Обработка отправки формы
   const handleSubmit = async () => {
     const { habit, moodBefore, moodAfter, comment, duration, context } = form;
     if (!habit || !moodBefore || !moodAfter || !duration || !context) {
@@ -87,6 +85,7 @@ const SurveyScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Введите вашу деятельность"
+        placeholderTextColor="#2b3c40"
         value={form.habit}
         onChangeText={(value) => setForm({ ...form, habit: value })}
       />
@@ -96,6 +95,7 @@ const SurveyScreen = ({ navigation }) => {
         selectedValue={form.context}
         style={styles.picker}
         onValueChange={(value) => setForm({ ...form, context: value })}
+        itemStyle={{ color: '#2b3c40' }}
       >
         <Picker.Item label="я один" value="я один" />
         <Picker.Item label="с родными" value="с родными" />
@@ -109,6 +109,7 @@ const SurveyScreen = ({ navigation }) => {
         selectedValue={form.duration}
         style={styles.picker}
         onValueChange={(value) => setForm({ ...form, duration: value })}
+        itemStyle={{ color: '#2b3c40' }}
       >
         <Picker.Item label="15 минут" value="15 минут" />
         <Picker.Item label="30 минут" value="30 минут" />
@@ -122,6 +123,7 @@ const SurveyScreen = ({ navigation }) => {
         selectedValue={form.moodBefore}
         style={styles.picker}
         onValueChange={(value) => setForm({ ...form, moodBefore: value })}
+        itemStyle={{ color: '#2b3c40' }}
       >
         {[...Array(10)].map((_, index) => (
           <Picker.Item key={index} label={`${10 - index}`} value={`${10 - index}`} />
@@ -133,6 +135,7 @@ const SurveyScreen = ({ navigation }) => {
         selectedValue={form.moodAfter}
         style={styles.picker}
         onValueChange={(value) => setForm({ ...form, moodAfter: value })}
+        itemStyle={{ color: '#2b3c40' }}
       >
         {[...Array(10)].map((_, index) => (
           <Picker.Item key={index} label={`${10 - index}`} value={`${10 - index}`} />
@@ -143,6 +146,7 @@ const SurveyScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Комментарии"
+        placeholderTextColor="#2b3c40"
         value={form.comment}
         onChangeText={(value) => setForm({ ...form, comment: value })}
       />
@@ -161,14 +165,14 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 10,
-    color: '#333',
+    color: '#2b3c40',
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 10,
     marginBottom: 20,
-    color: '#333',
+    color: '#2b3c40',
   },
   picker: {
     height: 50,

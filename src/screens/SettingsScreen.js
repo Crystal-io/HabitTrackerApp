@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
-    color: '#333',
+    color: '#2b3c40',
   },
   checkboxContainer: {
     flexDirection: 'column',
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     marginLeft: 8,
     fontSize: 16,
-    color: '#333',
+    color: '#2b3c40',
   },
 });
 

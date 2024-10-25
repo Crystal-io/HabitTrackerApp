@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    color: '#333',
+    color: '#2b3c40',
   },
 });
 
