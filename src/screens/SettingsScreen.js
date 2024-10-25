@@ -37,38 +37,24 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Button title="Очистить историю" onPress={handleClearHistory} /> 
+      <Button title="Очистить историю" onPress={handleClearHistory} color="#FF6F61" />
 
       <Text style={styles.title}>Настройки аналитики</Text>
-      <Text>Выберите типы графиков для отображения:</Text>
-      
+      <Text style={styles.subtitle}>Выберите типы графиков для отображения:</Text>
+
       <View style={styles.checkboxContainer}>
-        <View style={styles.checkboxItem}>
-          <CheckBox
-            value={selectedCharts.lineChart}
-            onValueChange={() => toggleChartSelection('lineChart')}
-          />
-          <Text style={styles.checkboxLabel}>Линейный график</Text>
-        </View>
-
-        <View style={styles.checkboxItem}>
-          <CheckBox
-            value={selectedCharts.pieChart}
-            onValueChange={() => toggleChartSelection('pieChart')}
-          />
-          <Text style={styles.checkboxLabel}>Круговая диаграмма</Text>
-        </View>
-
-        <View style={styles.checkboxItem}>
-          <CheckBox
-            value={selectedCharts.barChart}
-            onValueChange={() => toggleChartSelection('barChart')}
-          />
-          <Text style={styles.checkboxLabel}>Столбчатая диаграмма</Text>
-        </View>
+        {['lineChart', 'pieChart', 'barChart'].map((chartType, index) => (
+          <View style={styles.checkboxItem} key={index}>
+            <CheckBox
+              value={selectedCharts[chartType]}
+              onValueChange={() => toggleChartSelection(chartType)}
+            />
+            <Text style={styles.checkboxLabel}>{chartType}</Text>
+          </View>
+        ))}
       </View>
 
-      <Button title="Сохранить настройки" onPress={handleSaveSettings} />
+      <Button title="Сохранить настройки" onPress={handleSaveSettings} color="#4A90E2" />
     </View>
   );
 };
@@ -77,11 +63,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'center',
+    backgroundColor: '#f0faff',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+    fontWeight: 'bold',
+    color: '#4A90E2',
+  },
+  subtitle: {
+    fontSize: 18,
+    marginBottom: 10,
+    color: '#333',
   },
   checkboxContainer: {
     flexDirection: 'column',
@@ -95,6 +88,7 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     marginLeft: 8,
     fontSize: 16,
+    color: '#333',
   },
 });
 

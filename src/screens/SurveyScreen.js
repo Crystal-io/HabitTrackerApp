@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//const AsyncStorage = require('@react-native-async-storage/async-storage');
 import { Picker } from '@react-native-picker/picker';
 
 const SurveyScreen = ({ navigation }) => {
@@ -74,7 +73,7 @@ const SurveyScreen = ({ navigation }) => {
     setForm({
       habit: '',
       moodBefore: '8',
-      moodAfter: '',
+      moodAfter: '8',
       comment: '',
       duration: '1 час',
       context: 'я один',
@@ -148,7 +147,7 @@ const SurveyScreen = ({ navigation }) => {
         onChangeText={(value) => setForm({ ...form, comment: value })}
       />
 
-      <Button title="Сохранить" onPress={handleSubmit} />
+      <Button title="Сохранить" onPress={handleSubmit} color="#4A90E2" />
     </View>
   );
 };
@@ -157,16 +156,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#f0faff',
   },
   label: {
     fontSize: 16,
     marginBottom: 10,
+    color: '#333',
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 10,
     marginBottom: 20,
+    color: '#333',
   },
   picker: {
     height: 50,
