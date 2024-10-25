@@ -1,58 +1,71 @@
-// src/utils/analyticsData.js
+import moment from 'moment';
 
-
-// Группировка данных по дате для линейного графика
-// Внутри функции groupByDate
-export const groupByDate = (habits) => {
-  const groupedData = {};
-  habits.forEach((habit) => {
-    const date = new Date(habit.timestamp).toLocaleDateString();
-    if (!groupedData[date]) {
-      groupedData[date] = { moodSum: 0, count: 0 };
-    }
-    groupedData[date].moodSum += habit.moodAfter;
-    groupedData[date].count += 1;
-  });
-
-  const result = Object.keys(groupedData).map((date) => ({
-    x: date,
-    y: groupedData[date].moodSum / groupedData[date].count,
-  }));
-
-  console.log('groupByDate result:', result); // Отладка: вывод результата функции
-
-  return result;
+/**
+ * Group habits by date.
+ * @param {Array} habits - List of habit entries.
+ * @returns {Object} - Habits grouped by date.
+ */
+export const groupByDate = habits => {
+  return habits.reduce((acc, habit) => {
+    const date = moment(habit.timestamp).format('YYYY-MM-DD'); // Group by day
+    if (!acc[date]) acc[date] = [];
+    acc[date].push(habit);
+    return acc;
+  }, {});
 };
 
-  
-  // Подсчет частоты выполнения привычек
-  export const calculateHabitFrequency = (habits) => {
-    const habitFrequency = {};
-    habits.forEach((habit) => {
-      if (!habitFrequency[habit.habit]) {
-        habitFrequency[habit.habit] = 0;
-      }
-      habitFrequency[habit.habit] += 1;
-    });
-    return Object.keys(habitFrequency).map((habit) => ({
-      x: habit,
-      y: habitFrequency[habit],
-    }));
-  };
-  
-  // Распределение настроений по привычкам для круговой диаграммы
-  export const calculateMoodDistribution = (habits) => {
-    const moodDistribution = {};
-    habits.forEach((habit) => {
-      if (!moodDistribution[habit.habit]) {
-        moodDistribution[habit.habit] = { moodSum: 0, count: 0 };
-      }
-      moodDistribution[habit.habit].moodSum += habit.moodAfter;
-      moodDistribution[habit.habit].count += 1;
-    });
-    return Object.keys(moodDistribution).map((habit) => ({
-      x: habit,
-      y: moodDistribution[habit].moodSum / moodDistribution[habit].count,
-    }));
-  };
-  
+/**
+ * Calculate mood change (difference between moodBefore and moodAfter).
+ * @param {Array} habits - List of habit entries.
+ * @returns {Array} - Array of mood change data by date.
+ */
+export const calculateMoodChange = habits => {
+  const groupedData = groupByDate(habits);
+  return Object.keys(groupedData).map(date => {
+    const moods = groupedData[date].map(
+      habit => habit.moodAfter - habit.moodBefore,
+    );
+    const averageMoodChange = moods.reduce((a, b) => a + b, 0) / moods.length;
+    return {date, moodChange: averageMoodChange};
+  });
+};
+
+/**
+ * Calculate habit frequency.
+ * @param {Array} habits - List of habit entries.
+ * @returns {Array} - Array of habit frequency data.
+ */
+export const calculateHabitFrequency = habits => {
+  const frequency = {};
+  habits.forEach(habit => {
+    if (!frequency[habit.habit]) {
+      frequency[habit.habit] = 0;
+    }
+    frequency[habit.habit]++;
+  });
+  return Object.keys(frequency).map(habit => ({
+    habit,
+    count: frequency[habit],
+  }));
+};
+
+/**
+ * Calculate mood distribution (average mood score).
+ * @param {Array} habits - List of habit entries.
+ * @returns {Array} - Array of mood distribution data.
+ */
+export const calculateMoodDistribution = habits => {
+  const distribution = {};
+  habits.forEach(habit => {
+    const moodAvg = (habit.moodBefore + habit.moodAfter) / 2;
+    if (!distribution[habit.habit]) {
+      distribution[habit.habit] = {habit, totalMood: 0, count: 0};
+    }
+    distribution[habit.habit].totalMood += moodAvg;
+    distribution[habit.habit].count++;
+  });
+  return Object.values(distribution).map(item => ({
+    habit: item.habit,
+    moodAverage: item.totalMood / item.count,
+  }));
+};
