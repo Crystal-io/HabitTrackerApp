@@ -67,7 +67,7 @@ const SurveyScreen = ({ navigation }) => {
 
     await saveHabit(newHabit);
 
-    Alert.alert('Успешно', 'Ваши данные сохранены.');
+    Alert.alert('Поздравляю!', 'Ваши данные сохранены.');
     setForm({
       habit: '',
       moodBefore: '8',
@@ -177,6 +177,11 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginBottom: 20,
+    color: '#2b3c40',
   },
 });
 
